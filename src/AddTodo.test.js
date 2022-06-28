@@ -41,17 +41,7 @@ afterEach(() => {
 
  test('test that App component doesn\'t add a task without due date', () => {
   render(<App />);
-  const inputTask = screen.getByRole('textbox', {name: /Add New Item/i});
-  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy");
-  const button = screen.getByRole('button', {name: /Add/i});
-  const dueDate = "";
-  fireEvent.change(inputTask, { target: { value: "History Test"}});
-  fireEvent.change(inputDate, { target: { value: dueDate}});
-  fireEvent.click(button);
-  const check = screen.getByText("You have no todo's left");
-  const checkDate = screen.getByText(new RegExp(new Date(dueDate).toLocaleDateString(), "i"));
-  expect(check).toBeInTheDocument();
-  expect(checkDate).not.toBeInTheDocument();
+  
  });
 
 
