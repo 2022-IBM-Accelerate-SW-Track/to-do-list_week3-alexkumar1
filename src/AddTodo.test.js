@@ -21,7 +21,19 @@ afterEach(() => {
 
  test('test that App component doesn\'t render dupicate Task', () => {
   render(<App />);
+  const inputTask = screen.getByRole('textbox', {name: /Add New Item/i});
+  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy");
+  const button = screen.getByRole('button', {name: /Add/i});
+  const dueDate = "11/30/2023";
+  fireEvent.change(inputTask, { target: { value: "History Test"}});
+  fireEvent.change(inputDate, { target: { value: dueDate}});
+  fireEvent.click(button);
+  const check = screen.getByText(/History Test/i);
+  const checkDate = screen.getByText(new RegExp(dueDate, "i"));
+  expect(check).toBeInTheDocument();
+  expect(checkDate).toBeInTheDocument();
  });
+
 
  test('test that App component doesn\'t add a task without task name', () => {
   render(<App />);
@@ -35,6 +47,18 @@ afterEach(() => {
 
  test('test that App component can be deleted thru checkbox', () => {
   render(<App />);
+  const inputTask = screen.getByRole('textbox', {name: /Add New Item/i});
+  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy");
+  const button = screen.getByRole('button', {name: /Add/i});
+  const dueDate = "11/30/2023";
+
+  fireEvent.change(inputTask, { target: { value: "History Test"}});
+  fireEvent.change(inputDate, { target: { value: dueDate}});
+  fireEvent.click(button);
+  fireEvent.click(clickCheck);
+
+  const check = screen.getByText("You have no todo's left");
+  expect(check).toBeInTheDocument();
  });
 
 
